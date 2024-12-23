@@ -36,7 +36,7 @@ public class ComputeData implements SymptomsReader {
         return result;
     }
 
-    public ArrayList<String>
+
 }
 
 
