@@ -1,14 +1,12 @@
+import Interfaces.FileCreator;
 import Interfaces.SymptomsReader;
+import Interfaces.SymptomsWriter;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
-public class ComputeData implements SymptomsReader {
+public class ComputeData implements SymptomsReader, FileCreator, SymptomsWriter {
 
     // Attribute
     private String filePath;
@@ -55,6 +53,40 @@ public class ComputeData implements SymptomsReader {
         System.out.println(result);
         return result;
     }
+
+    @Override
+    public String createFile(String filePath) {
+        try {
+            File resultFile = new File(filePath);
+            if (resultFile.createNewFile()){
+                System.out.println("File created "+ resultFile.getName());
+            }else {
+                System.out.println("File already exists");
+            }
+            return filePath;
+        }catch (IOException e) {
+            System.out.println("An error occurred");
+            e.printStackTrace();
+        }
+
+        return filePath;
+    }
+
+    @Override
+    public void writeToFile(String filePath, TreeMap<String, Integer> data) {
+        try {
+            FileWriter myWriter = new FileWriter(filePath);
+            myWriter.write (String.valueOf(data));
+            myWriter.close();
+            System.out.println("Successfully wrote to the file");
+        }catch (IOException e){
+            System.out.println("An error occurred");
+            e.printStackTrace();
+
+        }
+    }
+
+
 }
 
 
