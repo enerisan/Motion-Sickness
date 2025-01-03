@@ -11,7 +11,7 @@ public class SymptomsCounter {
         ComputeData computeData = new ComputeData("./symptoms.txt");
         ArrayList<String> unsortedSymptoms = computeData.readSymptoms();
         TreeMap<String, Integer> sortedSymptoms = computeData.computeSymptoms(unsortedSymptoms);
-        computeData.writeToFile(computeData.createFile("resultsFile"), sortedSymptoms);
+        computeData.writeToFile("./resultsFile.txt", sortedSymptoms);
     }
 }
 

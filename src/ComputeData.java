@@ -1,12 +1,12 @@
-import Interfaces.FileCreator;
 import Interfaces.SymptomsReader;
 import Interfaces.SymptomsWriter;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
-public class ComputeData implements SymptomsReader, FileCreator, SymptomsWriter {
+public class ComputeData implements SymptomsReader,SymptomsWriter {
 
     // Attribute
     private String filePath;
@@ -54,29 +54,17 @@ public class ComputeData implements SymptomsReader, FileCreator, SymptomsWriter 
         return result;
     }
 
-    @Override
-    public String createFile(String filePath) {
-        try {
-            File resultFile = new File(filePath);
-            if (resultFile.createNewFile()){
-                System.out.println("File created "+ resultFile.getName());
-            }else {
-                System.out.println("File already exists");
-            }
-            return filePath;
-        }catch (IOException e) {
-            System.out.println("An error occurred");
-            e.printStackTrace();
-        }
-
-        return filePath;
-    }
 
     @Override
     public void writeToFile(String filePath, TreeMap<String, Integer> data) {
+       FileWriter file;
         try {
-            FileWriter myWriter = new FileWriter(filePath);
-            myWriter.write (String.valueOf(data));
+           BufferedWriter myWriter = new BufferedWriter(new FileWriter(filePath));
+           for(Map.Entry<String, Integer> symptom : data.entrySet()) {
+               myWriter.write (symptom.getKey() + "=" + symptom.getValue());
+               myWriter.newLine();
+           }
+
             myWriter.close();
             System.out.println("Successfully wrote to the file");
         }catch (IOException e){
